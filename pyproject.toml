@@ -42,6 +42,7 @@ dependencies = [
     "orbitkit @ git+https://github.com/alexfikl/orbitkit.git#egg=orbitkit",
     "rich",
     "scienceplots>=2.2",
+    "symengine>=0.13",
 ]
 
 [dependency-groups]

@@ -1,5 +1,4 @@
 PYTHON := "nice python -X dev"
-BUILDDIR := "results"
 EXT := ".jpg"
 
 _default:
