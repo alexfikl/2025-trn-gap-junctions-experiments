@@ -1,2 +1,27 @@
-*.png
+# system
+.DS_Store
+tags
+
+# temporary
+*~
+*.swp
+*.kate-swp
+
+# python
+*.egg
+*.egg-info
+*.whl
+
+# object files
+*.o
+*.so
+*.x
+
+# directories
+.ruff_cache
 __pycache__
+
+# generated
+*.npz
+*.pdf
+*.png
