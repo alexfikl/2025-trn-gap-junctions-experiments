@@ -1,8 +1,6 @@
 # Gap junction architecture and synchronization clusters in the thalamic reticular nuclei
 
-.. |badge-license| image:: https://img.shields.io/badge/License-MIT-blue.svg
-    :target: https://spdx.org/licenses/MIT.html
-    :alt: MIT License
+[![MIT License](https://img.shields.io/badge/License-MIT-blue.svg)](https://spdx.org/licenses/MIT.html)
 
 This code accompanies the paper by the same name. It contains all the scripts used
 to generate the figures and results in the paper.
