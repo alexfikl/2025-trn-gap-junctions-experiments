@@ -1,4 +1,5 @@
-# This is a custom matplotlib style modify as needed
+# SPDX-FileCopyrightText: 2025 Alexandru Fikl <alexfikl@gmail.com>
+# SPDX-License-Identifier: MIT
 
 # NOTE: this is the "gem12" color cycle from MATLAB
 axes.prop_cycle: cycler('color', ['0072bd', 'd95319', 'edb120', '7e2f8e', '77ac30', '4dbeee', 'a2142f', 'ffd60a', '6582fd', 'ff453a', '00a3a3', 'cb845d'])

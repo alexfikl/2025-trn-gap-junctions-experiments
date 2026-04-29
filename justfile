@@ -39,12 +39,17 @@ justfmt:
 # {{{ linting
 
 [doc("Run all linting checks over the source code")]
-lint: typos ruff ty
+lint: typos reuse ruff ty
 
 [doc("Run typos over the source code and documentation")]
 typos:
     typos --sort
     @echo -e "\e[1;32mtypos clean!\e[0m"
+
+[doc('Check REUSE license compliance')]
+reuse:
+    {{ PYTHON }} -m reuse lint
+    @echo -e "\e[1;32mREUSE compliant!\e[0m"
 
 [doc("Run ruff checks over the source code")]
 ruff:

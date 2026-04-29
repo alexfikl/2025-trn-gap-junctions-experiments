@@ -47,6 +47,7 @@ dependencies = [
 [dependency-groups]
 dev = [
     "pyproject-fmt",
+    "reuse",
     "ruff",
     "ty",
     "typos",
