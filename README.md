@@ -24,6 +24,21 @@ Besides this, the user is expected to have
   removed by setting `text.usetex: False` in `default.mplstyle`, as it is only
   required for plotting.
 
+# Installation
+
+It is recommended to install the (Python) dependencies in a [virtual
+environment](https://docs.python.org/3/library/venv.html) to avoid conflicts
+with other packages. The dependencies can then be installed using
+[pip](https://pip.pypa.io/en/stable/user_guide/)
+```bash
+pip install -r requirements.txt
+```
+or
+[uv](https://docs.astral.sh/uv/pip/packages/#installing-packages)
+```bash
+uv pip sync requirements.txt
+```
+
 # Reproducing the results
 
 The included `justfile` has all the necessary invocations to reproduce the figures
