@@ -43,9 +43,14 @@ dependencies = [
     "rich",
     "scienceplots>=2.2",
 ]
-optional-dependencies.dev = [
+
+[dependency-groups]
+dev = [
     "pyproject-fmt",
     "ruff",
+    "ty",
+    "typos",
+    "uv",
 ]
 
 [tool.hatch]
