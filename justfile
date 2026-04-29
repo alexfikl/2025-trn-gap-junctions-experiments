@@ -1,5 +1,4 @@
 PYTHON := "nice python -X dev"
-NETBROT := "${NETBROT_PATH:-netbrot}"
 BUILDDIR := "results"
 EXT := ".jpg"
 
@@ -27,7 +26,7 @@ black:
 [doc("Run pyproject-fmt over the configuration")]
 pyproject:
     {{ PYTHON }} -m pyproject_fmt \
-        --indent 4 --max-supported-python "3.13" \
+        --indent 4 --max-supported-python "3.14" \
         pyproject.toml
     @echo -e "\e[1;32mpyproject clean!\e[0m"
 
@@ -74,6 +73,14 @@ purge:
     rm -rf *.png
     rm -rf results
     rm -rf .ruff_cache __pycache__
+
+[private]
+requirements_txt:
+    uv pip compile --upgrade --universal --python-version '3.10' \
+        -o requirements.txt pyproject.toml
+
+[doc('Pin dependency versions to requirements.txt')]
+pin: requirements_txt
 
 # }}}
 # {{{ figures
