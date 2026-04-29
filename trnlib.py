@@ -630,8 +630,6 @@ def solve_ivp(
 
             if module_location is not None:
                 t_start = time.time()
-                # ode.generate_f_C(simplify=False, chunk_size=50)
-                # ode.compile_C(omp=True, modulename=module_location.stem)
                 newfilename = ode.save_compiled(str(module_location), overwrite=True)
                 if verbose:
                     log.info("Compilation time: %.3fs.", time.time() - t_start)

@@ -230,7 +230,6 @@ def visualize(filename: pathlib.Path, *, force: bool = False) -> int:
         results = data["result_cluster"][()]
     else:
         results = data["cluster_stats"][()]
-    model = trnlib.from_dict(trnlib.Model, data["model"][()])
 
     # {{{ gather histogram
 
@@ -248,81 +247,29 @@ def visualize(filename: pathlib.Path, *, force: bool = False) -> int:
     from itertools import product
 
     filename = filename.with_suffix("")
-    with trnlib.jitcode_module(filename.stem) as module_location:
-        for i, j in product(range(g_syns.size), range(g_els.size)):
-            log.info("Plotting solutions for gsyn %.3f gel %.3f", g_syns[i], g_els[j])
+    for i, j in product(range(g_syns.size), range(g_els.size)):
+        log.info("Plotting solutions for gsyn %.3f gel %.3f", g_syns[i], g_els[j])
 
-            # NOTE: we need to slugify here, otherwise some of the `with_stem`
-            # below will be confused by the extra dots in the filenames
-            basename = slugify(f"{filename.stem}_{g_syns[i]:.4f}_{g_els[j]:.4f}")
+        # NOTE: we need to slugify here, otherwise some of the `with_stem`
+        # below will be confused by the extra dots in the filenames
+        basename = slugify(f"{filename.stem}_{g_syns[i]:.4f}_{g_els[j]:.4f}")
 
-            outfile = filename.with_stem(f"{basename}_histogram")
-            with figure(
-                outfile,
-                figsize=(10, 10),
-                normalize=True,
-                overwrite=force,
-                pad_inches=0.125,
-            ) as fig:
-                ax = fig.gca()
+        outfile = filename.with_stem(f"{basename}_histogram")
+        with figure(
+            outfile,
+            figsize=(10, 10),
+            normalize=True,
+            overwrite=force,
+            pad_inches=0.125,
+        ) as fig:
+            ax = fig.gca()
 
-                trnlib.visualize_cluster_stat(
-                    ax,
-                    clusters[i, j, :] / np.sum(clusters[i, j, :]),
-                    g_syn_label=f"{g_syns[i]:.2f}",
-                    g_el_label=f"{g_els[j]:.2f}",
-                )
-
-            # plot a nicely converged solution
-            chimera_k = 0
-            for k in range(15, -1, -1):
-                if (i, j, k) not in results:
-                    continue
-
-                cinfo = trnlib.Cluster(**results[i, j, k])
-                model = replace(
-                    model, param=replace(model.param, g_syn=g_syns[i], g_el=g_els[j])
-                )
-
-                flag = _plot_solution_and_heatmap(
-                    cinfo,
-                    model,
-                    filename.with_stem(basename),
-                    predicate=lambda e: e > 1.0e-2,
-                    module_location=module_location,
-                    overwrite=force,
-                )
-
-                if flag:
-                    break
-
-                chimera_k = max(chimera_k, k)
-
-            # # NOTE: we reached the fixed point, there's no chimeras here!
-            # if chimera_k == 0:
-            #     chimera_k = -1
-
-            # # plot a potential chimera solution
-            # for k in range(chimera_k, -1, -1):
-            #     if (i, j, k) not in results:
-            #         continue
-
-            #     cinfo = trnlib.Cluster(**results[i, j, k])
-            #     model = replace(
-            #         model, param=replace(model.param, g_syn=g_syns[i], g_el=g_els[j])
-            #     )
-
-            #     flag = _plot_solution_and_heatmap(
-            #         cinfo,
-            #         model,
-            #         filename.with_stem(f"{basename}_chimera_{k:02d}"),
-            #         predicate=lambda e: e < 1.0e-2,
-            #         module_location=module_location,
-            #         overwrite=force,
-            #     )
-
-            #     if flag:
-            #         break
+            trnlib.visualize_cluster_stat(
+                ax,
+                clusters[i, j, :] / np.sum(clusters[i, j, :]),
+                g_syn_label=f"{g_syns[i]:.2f}",
+                g_el_label=f"{g_els[j]:.2f}",
+            )
 
     # }}}
 
