@@ -28,10 +28,6 @@ def main(
     if outfile is None:
         outfile = pathlib.Path(f"trn_evolve_{n:04d}_{adjacency}")
 
-    if not force and outfile.exists():
-        log.error("File already exists (use --force to overwrite): '%s'", outfile)
-        return 1
-
     A, ms, _ = trnlib.make_adjacency_set(adjacency, n)
     log.info("Gap junction clusters: %s", ms)
     model = trnlib.Model.defaults(n, A=A, g_el=0.0)

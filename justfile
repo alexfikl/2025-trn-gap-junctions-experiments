@@ -75,7 +75,6 @@ ctags:
 [doc("Remove all generated files")]
 purge:
     rm -rf *.png
-    rm -rf results
     rm -rf .ruff_cache __pycache__
 
 [private]
