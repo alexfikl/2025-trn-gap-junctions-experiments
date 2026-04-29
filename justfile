@@ -1,4 +1,4 @@
-PYTHON := "nice python -X dev"
+PYTHON := "nice python"
 EXT := ".jpg"
 
 _default:
@@ -74,7 +74,7 @@ ctags:
 
 [doc("Remove all generated files")]
 purge:
-    rm -rf *.png
+    rm -rf *.png *.jpg *.pdf
     rm -rf .ruff_cache __pycache__
 
 [private]
