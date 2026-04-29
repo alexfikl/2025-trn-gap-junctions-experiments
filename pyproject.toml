@@ -1,0 +1,103 @@
+[build-system]
+build-backend = "hatchling.build"
+requires = [
+    "hatchling>=1.10",
+]
+
+[project]
+name = "trn-gap-junctions"
+version = "2025.1"
+description = "Experiments for analyzing TRN gap junctions"
+keywords = [
+    "Complex systems theory",
+    "Oscillators",
+    "TRN",
+]
+license = "MIT"
+maintainers = [ { name = "Alexandru Fikl", email = "alexfikl@gmail.com" } ]
+authors = [ { name = "Alexandru Fikl", email = "alexfikl@gmail.com" } ]
+requires-python = ">=3.10"
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Other Audience",
+    "Intended Audience :: Science/Research",
+    "Natural Language :: English",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Scientific/Engineering",
+    "Topic :: Utilities",
+]
+dependencies = [
+    "matplotlib>=3.10",
+    "numpy>=2",
+    "orbitkit @ git+https://github.com/alexfikl/orbitkit.git#egg=orbitkit",
+    "rich",
+]
+optional-dependencies.dev = [
+    "pyproject-fmt",
+    "ruff",
+]
+
+[tool.hatch]
+metadata.allow-direct-references = true
+
+[tool.ruff]
+line-length = 88
+preview = true
+lint.select = [
+    "A",   # flake8-builtins
+    "B",   # flake8-bugbear
+    "C4",  # flake8-comprehensions
+    "E",   # flake8
+    "F",   # flake8
+    "FBT", # flake8-boolean-trap
+    "G",   # flake8-logging-format
+    "I",   # flake8-isort
+    "ISC", # flake8-implicit-str-concat
+    "N",   # pep8-naming
+    "NPY", # numpy
+    "PL",  # pylint
+    "PT",  # flake8-pytest-style
+    "Q",   # flake8-quotes
+    "RUF", # ruff
+    "S",   # flake8-bandit
+    "SIM", # flake8-simplify
+    "UP",  # pyupgrade
+    "W",   # flake8
+]
+lint.ignore = [
+    "C409",    # incorrectly-parenthesized-tuple-in-subscript
+    "E402",    # module-import-not-at-top-of-file
+    "ISC001",  # single-line-implicit-string-concatenation
+    "N803",    # lowercase-argument
+    "N806",    # lowercase-variable
+    "N815",    # mixedcase-variable
+    "PLC0415", # import-outside-top-level
+    "PLC2801", # unnecessary-dunder-call
+    "PLR0911", # too-many-return-statements
+    "PLR0912", # too-many-branches
+    "PLR0913", # too-many-arguments
+    "PLR0914", # too-many-locals
+    "PLR0915", # too-many-statements
+    "PLR0917", # too-many-positional
+    "PLR2004", # magic-value-comparison
+    "PLR6104", # non-augmented-assignment
+    "PLR6301", # no-self-use
+    "S101",    # assert
+    "S102",    # exec-builtin
+]
+lint.flake8-quotes.docstring-quotes = "double"
+lint.flake8-quotes.inline-quotes = "double"
+lint.flake8-quotes.multiline-quotes = "double"
+lint.isort.force-wrap-aliases = true
+lint.isort.known-first-party = [
+    "orbitkit",
+]
+lint.isort.required-imports = [
+    "from __future__ import annotations",
+]
