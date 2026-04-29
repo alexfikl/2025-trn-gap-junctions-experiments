@@ -41,6 +41,11 @@ uv pip sync requirements.txt
 
 # Reproducing the results
 
+> [!WARNING]
+> The results for Figure 4 and 6 take a longer time to run (i.e. a couple of hours).
+> These all generate `npz` files that can then be used to (re)plot the results,
+> but users will have to do so manually.
+
 The included `justfile` has all the necessary invocations to reproduce the figures
 in the paper. You can just run
 ```bash
@@ -57,3 +62,4 @@ just figure6 set4
 to get all the figures. The runs for Figure 6 will also produce Figure 7, 8, 9
 and 10, since they are all obtained from the same run over the `(gsyn, gel)`
 parameter plane.
+
