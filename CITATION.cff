@@ -1,0 +1,31 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+type: software
+authors:
+  - family-names: Fikl
+    given-names: Alexandru
+title: "Gap Junctions and Synchronization Clusters in the Thalamic Reticular Nuclei"
+year: 2022
+identifiers:
+  - type: doi
+    value: 10.5281/zenodo.19920160
+    description: Zenodo repository
+preferred-citation:
+  type: article
+  authors:
+    - family-names: Rădulescu
+      given-names: Anca
+    - family-names: Kaslik
+      given-names: Eva
+    - family-names: Fikl
+      given-names: Alexandru
+    - family-names: Anderson
+      given-names: Michael
+    - family-names: Norwood
+      given-names: Alex
+  title: "Gap Junctions and Synchronization Clusters in the Thalamic Reticular Nuclei"
+  year: 2022
+  identifiers:
+    - type: other
+      value: "arxiv:2209.00384v2"
+      description: arXiv preprint

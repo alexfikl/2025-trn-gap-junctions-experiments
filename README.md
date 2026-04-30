@@ -3,8 +3,9 @@
 [![MIT License](https://img.shields.io/badge/License-MIT-blue.svg)](https://spdx.org/licenses/MIT.html)
 [![Zenodo repository](https://zenodo.org/badge/DOI/10.5281/zenodo.19920160.svg)](https://doi.org/10.5281/zenodo.19920160)
 
-This code accompanies the paper by the same name. It contains all the scripts used
-to generate the figures and results in the paper.
+This code accompanies the [paper](https://doi.org/10.48550/arXiv.2209.00384) by
+the same name. It contains all the scripts used to generate the figures and
+results in the paper.
 
 # Dependencies
 
@@ -62,3 +63,14 @@ to get all the figures. The runs for Figure 6 will also produce Figure 7, 8, 9
 and 10, since they are all obtained from the same run over the `(gsyn, gel)`
 parameter plane.
 
+# Citing
+
+```bibtex
+@article{Radulescu2022,
+    author = { Anca Rădulescu and Eva Kaslik and Alexandru Fikl and Michael Anderson and Alex Norwood },
+    eprint = { 2209.00384v2 },
+    eprinttype = { arxiv },
+    title = { Gap Junctions and Synchronization Clusters in the Thalamic Reticular Nuclei },
+    year = { 2022 }
+}
+```
