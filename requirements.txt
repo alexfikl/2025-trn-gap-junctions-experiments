@@ -22,13 +22,7 @@ markdown-it-py==4.2.0
     # via rich
 markupsafe==3.0.3
     # via jinja2
-matplotlib==3.10.9 ; python_full_version < '3.11'
-    # via
-    #   trn-gap-junctions (pyproject.toml)
-    #   nxviz
-    #   scienceplots
-    #   seaborn
-matplotlib==3.11.0 ; python_full_version >= '3.11'
+matplotlib==3.10.9
     # via
     #   trn-gap-junctions (pyproject.toml)
     #   nxviz
