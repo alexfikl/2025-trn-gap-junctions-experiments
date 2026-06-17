@@ -6,7 +6,7 @@ requires = [
 
 [project]
 name = "trn-gap-junctions"
-version = "2026.0"
+version = "2026.1"
 description = "Experiments for analyzing TRN gap junctions"
 keywords = [
     "Complex systems theory",
