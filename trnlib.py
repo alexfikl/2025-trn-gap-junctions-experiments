@@ -29,15 +29,14 @@ def set_plotting_defaults() -> None:
 
     The defaults can be overwritten with a local ``default.mplstyle`` file.
     """
-    # NOTE: since v1.1.0 an import is required to import the styles
-    import scienceplots  # noqa: F401
+    from orbitkit.visualization import load_scienceplots_styles
 
-    dirname = pathlib.Path(__file__).parent
-    plt.style.use(["science", "ieee"])
+    styles = load_scienceplots_styles()
+    plt.style.use(styles.get(["science", "ieee"]))
 
-    mplstyle = dirname / "default.mplstyle"
+    mplstyle = pathlib.Path(__file__).parent / "default.mplstyle"
     if mplstyle.exists():
-        plt.style.use(dirname / "default.mplstyle")
+        plt.style.use(mplstyle)
 
     import os
 
