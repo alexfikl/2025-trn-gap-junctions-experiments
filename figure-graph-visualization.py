@@ -57,7 +57,7 @@ def main(
         palette = {f"Group {i}": colors[i] for i in range(indices.size)}
         palette = {**palette, "": "k"}
 
-        import nxviz as nv  # ty: ignore[unresolved-import]
+        import nxviz as nv
 
         nv.circos(
             G,
