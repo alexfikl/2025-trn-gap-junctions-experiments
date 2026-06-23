@@ -22,7 +22,13 @@ markdown-it-py==4.2.0
     # via rich
 markupsafe==3.0.3
     # via jinja2
-matplotlib==3.10.9
+matplotlib==3.10.9 ; python_full_version < '3.11'
+    # via
+    #   trn-gap-junctions (pyproject.toml)
+    #   nxviz
+    #   scienceplots
+    #   seaborn
+matplotlib==3.11.0 ; python_full_version >= '3.11'
     # via
     #   trn-gap-junctions (pyproject.toml)
     #   nxviz
@@ -52,7 +58,19 @@ numpy==2.2.6 ; python_full_version < '3.11'
     #   pandas
     #   scipy
     #   seaborn
-numpy==2.4.6 ; python_full_version >= '3.11'
+numpy==2.4.6 ; python_full_version == '3.11.*'
+    # via
+    #   trn-gap-junctions (pyproject.toml)
+    #   contourpy
+    #   jitcode
+    #   jitcxde-common
+    #   matplotlib
+    #   nxviz
+    #   orbitkit
+    #   pandas
+    #   scipy
+    #   seaborn
+numpy==2.5.0 ; python_full_version >= '3.12'
     # via
     #   trn-gap-junctions (pyproject.toml)
     #   contourpy
@@ -68,7 +86,7 @@ nxviz==0.7.6 ; python_full_version < '3.12'
     # via trn-gap-junctions (pyproject.toml)
 nxviz==0.9.0 ; python_full_version >= '3.12'
     # via trn-gap-junctions (pyproject.toml)
-orbitkit @ git+https://github.com/alexfikl/orbitkit.git@378524fea799b1d44cef9999399c622f4d2513dd#egg=orbitkit
+orbitkit @ git+https://github.com/alexfikl/orbitkit.git@1a7f069cb3e200a137def6da6db0ca3712dd1c13#egg=orbitkit
     # via trn-gap-junctions (pyproject.toml)
 packaging==26.2
     # via matplotlib
@@ -98,13 +116,17 @@ rich==15.0.0
     # via
     #   trn-gap-junctions (pyproject.toml)
     #   orbitkit
-scienceplots==2.2.1
+scienceplots==2.2.2
     # via trn-gap-junctions (pyproject.toml)
 scipy==1.15.3 ; python_full_version < '3.11'
     # via
     #   jitcode
     #   orbitkit
-scipy==1.17.1 ; python_full_version >= '3.11'
+scipy==1.17.1 ; python_full_version == '3.11.*'
+    # via
+    #   jitcode
+    #   orbitkit
+scipy==1.18.0 ; python_full_version >= '3.12'
     # via
     #   jitcode
     #   orbitkit
