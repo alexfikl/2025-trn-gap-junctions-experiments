@@ -97,8 +97,8 @@ def main(
         nrounds=nrounds,
         g_syns=np.array(g_syns),
         g_els=np.array(g_els),
-        model=asdict(model),  # ty: ignore[invalid-argument-type]
-        cluster_stats={k: asdict(v) for k, v in result.items()},  # ty: ignore[invalid-argument-type]
+        model=asdict(model),
+        cluster_stats={k: asdict(v) for k, v in result.items()},
     )
 
     return visualize(outfile, force=force)
