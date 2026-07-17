@@ -16,7 +16,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import numpy.linalg as la
 
-from orbitkit.typing import Array
+from orbitkit.typing import Array1D, Array2D
 from orbitkit.utils import module_logger
 
 log = module_logger("trn")
@@ -120,7 +120,7 @@ def make_custom_colormap(name: str, *, ncolors: int = 5) -> Any:
 
 def visualize_cluster_stat(
     ax: plt.Axes,
-    z: Array,
+    z: Array1D[np.floating[Any]],
     *,
     g_syn_label: str = "",
     g_el_label: str = "",
@@ -165,15 +165,15 @@ def visualize_cluster_stat(
 
 def visualize_imshow_grid(
     fig: plt.Figure,
-    x: Array,
-    y: Array,
-    z: Array,
+    x: Array1D[np.floating[Any]],
+    y: Array1D[np.floating[Any]],
+    z: Array2D[np.floating[Any]],
     *,
     xlabel: str = r"$g_{\text{syn}}$ (mS/cm${}^2$)",
     ylabel: str = r"$g_{\text{el}}$ (mS/cm${}^2$)",
     title: str | None = None,
     cmap: str = "jet",
-    alpha: float | Array | None = None,
+    alpha: float | Array2D[np.floating[Any]] | None = None,
     vmax: float = 1.0,
     shrink: float = 0.7,
     grid: bool = True,
@@ -225,9 +225,9 @@ def visualize_imshow_grid(
 
 def visualize_fraction(
     fig: plt.Figure,
-    x: Array,
-    y: Array,
-    z: Array,
+    x: Array1D[np.floating[Any]],
+    y: Array1D[np.floating[Any]],
+    z: Array2D[np.floating[Any]],
     *,
     title: str | None = None,
     cmap: str = "binary",
@@ -253,9 +253,9 @@ def visualize_fraction(
 
 def visualize_pfeuty_chi(
     fig: plt.Figure,
-    x: Array,
-    y: Array,
-    z: Array,
+    x: Array1D[np.floating[Any]],
+    y: Array1D[np.floating[Any]],
+    z: Array2D[np.floating[Any]],
     *,
     vmax: float = 1.0,
     cmap: str = "managua",
@@ -285,13 +285,13 @@ def visualize_pfeuty_chi(
 
 def visualize_cluster_average(
     fig: plt.Figure,
-    x: Array,
-    y: Array,
-    z: Array,
+    x: Array1D[np.floating[Any]],
+    y: Array1D[np.floating[Any]],
+    z: Array2D[np.floating[Any]],
     *,
     title: str | None = None,
     fptick: str = "FP",
-    alpha: float | Array | None = None,
+    alpha: float | Array2D[np.floating[Any]] | None = None,
     cmap: str = "turbo",
 ) -> None:
     ax = fig.gca()
@@ -357,10 +357,17 @@ class GatingFunction:
     theta: float
     sigma: float
 
-    def exp(self, V: Array, xp: Any = np) -> Array:
-        return cast("Array", np.vectorize(xp.exp)(-(V - self.theta) / self.sigma))
+    def exp(
+        self, V: Array1D[np.floating[Any]], xp: Any = np
+    ) -> Array1D[np.floating[Any]]:
+        return cast(
+            "Array1D[np.floating[Any]]",
+            np.vectorize(xp.exp)(-(V - self.theta) / self.sigma),
+        )
 
-    def __call__(self, V: Array, xp: Any = np) -> Array:
+    def __call__(
+        self, V: Array1D[np.floating[Any]], xp: Any = np
+    ) -> Array1D[np.floating[Any]]:
         return 1.0 / (1.0 + self.exp(V, xp=xp))
 
 
@@ -408,9 +415,9 @@ class Model:
     k_inf: GatingFunction
     """Gating function parameters for :math:`k_h`."""
 
-    A: Array
+    A: Array2D[np.floating[Any]]
     """Binary adjacency matrix for gap junction connections."""
-    M: Array = field(init=False)
+    M: Array2D[np.floating[Any]] = field(init=False)
     """Total number of gap junctions made on each neuron."""
 
     def __post_init__(self) -> None:
@@ -421,10 +428,12 @@ class Model:
         return self.M.size
 
     @property
-    def V_threshold(self) -> float:  # noqa: N802
+    def V_threshold(self) -> float:  # ruff:ignore[invalid-function-name]
         return -40.0
 
-    def kh(self, V: Array, xp: Any = np) -> Array:
+    def kh(
+        self, V: Array1D[np.floating[Any]], xp: Any = np
+    ) -> Array1D[np.floating[Any]]:
         phi = self.param.phi
         return phi * self.k_inf.exp(V, xp=xp) / self.h_inf(V, xp=xp)
 
@@ -435,7 +444,7 @@ class Model:
         *,
         g_syn: float = 0.2,
         g_el: float = 0.0,
-        A: Array | None = None,
+        A: Array2D[np.floating[Any]] | None = None,
     ) -> Model:
         if A is None:
             # NOTE: by default, we have an all-to-all gap junction connection matrix
@@ -468,7 +477,7 @@ class Model:
         return model
 
 
-def model_source(model: Model, t: float, x: Array) -> Array:
+def model_source(model: Model, t: float, x: Array1D[Any]) -> Array1D[Any]:
     r"""Compute the Rinzel model.
 
     .. math::
@@ -537,8 +546,8 @@ def model_source(model: Model, t: float, x: Array) -> Array:
 
 @dataclass(frozen=True)
 class Result:
-    t: Array
-    y: Array
+    t: Array1D[np.floating[Any]]
+    y: Array2D[np.floating[Any]]
 
 
 @contextmanager
@@ -559,7 +568,7 @@ def jitcode_module(suffix: str) -> Iterator[pathlib.Path]:
 def solve_ivp(
     model: Model,
     tspan: tuple[float, float],
-    y0: Array,
+    y0: Array1D[np.floating[Any]],
     *,
     method: str = "RK45",
     backend: str = "jitcode",
@@ -678,9 +687,9 @@ class Cluster:
     tcount: int
     """The number of times this cluster count was achieved, while the signal was
     over threshold."""
-    x0: Array
+    x0: Array1D[np.floating[Any]]
     """A representative initial condition that got this cluster count."""
-    cluster_indices: tuple[Array, ...]
+    cluster_indices: tuple[Array1D[np.integer[Any]], ...]
     """A list of indices for each cluster that was formed."""
     pfeuty_chi: float
     """Measure of synchrony based on Pfeuty (2007)."""
@@ -691,12 +700,12 @@ class Cluster:
     """Time span over which the solution was evolved to get the clusters."""
 
 
-def is_fixed_point(x: Array, eps: float = 1.0e-4) -> bool:
+def is_fixed_point(x: Array2D[np.floating[Any]], eps: float = 1.0e-4) -> bool:
     rtol = np.max(la.norm(np.diff(x), axis=1) / la.norm(x, axis=1, ord=np.inf))
     return bool(rtol < eps)
 
 
-def get_cluster_error(cx: Cluster, V: Array) -> float:
+def get_cluster_error(cx: Cluster, V: Array1D[np.floating[Any]]) -> float:
     error = 0.0
 
     for i in cx.cluster_indices:
@@ -770,8 +779,8 @@ def find_clusters_for_model(
     model: Model,
     index: tuple[int, int, int],
     *,
-    g_syns: Array,
-    g_els: Array,
+    g_syns: Array1D[np.floating[Any]],
+    g_els: Array1D[np.floating[Any]],
     tspan: tuple[float, float],
     module_location: pathlib.Path,
     rng: np.random.Generator | None = None,
@@ -843,7 +852,7 @@ def find_clusters_for_model(
 # {{{ adjacency
 
 
-def stringify_adjacency(mat: Array, fmt: str = "box") -> str:
+def stringify_adjacency(mat: Array2D[np.floating[Any]], fmt: str = "box") -> str:
     if fmt == "box":
         symbols = {0: " ◻ ", 1: " ◼ "}
 
@@ -865,7 +874,9 @@ def stringify_adjacency(mat: Array, fmt: str = "box") -> str:
         raise ValueError(f"Unknown format: '{fmt}'")
 
 
-def make_partition_from_fractions(m: int, ps: Array) -> Array:
+def make_partition_from_fractions(
+    m: int, ps: Array1D[np.floating[Any]]
+) -> Array1D[np.integer[Any]]:
     if not all(0 <= p <= 1.0 for p in ps):
         raise ValueError(f"Probabilities need to be in [0, 1]: {ps}")
 
@@ -885,7 +896,7 @@ def make_partition_from_fractions(m: int, ps: Array) -> Array:
     return np.array(ms)
 
 
-def make_adjacency_all(n: int, *, dtype: Any = None) -> Array:
+def make_adjacency_all(n: int, *, dtype: Any = None) -> Array2D[np.floating[Any]]:
     if dtype is None:
         dtype = np.int32
 
@@ -896,11 +907,13 @@ def make_adjacency_all(n: int, *, dtype: Any = None) -> Array:
 
 
 def make_adjacency_groups(
-    ms: Array,
-    gaps: int | Array,
+    ms: Array1D[np.integer[Any]],
+    gaps: int | Array1D[np.integer[Any]],
     *,
     dtype: Any = None,
-) -> tuple[Array, Array, Array]:
+) -> tuple[
+    Array2D[np.floating[Any]], Array1D[np.integer[Any]], Array1D[np.integer[Any]]
+]:
     if dtype is None:
         dtype = np.int32
 
@@ -930,7 +943,9 @@ def make_adjacency_set(
     n: int,
     *,
     dtype: Any = None,
-) -> tuple[Array, Array, Array]:
+) -> tuple[
+    Array2D[np.floating[Any]], Array1D[np.integer[Any]], Array1D[np.integer[Any]]
+]:
     if name == "set1":
         return make_adjacency_set1(n, dtype=dtype)
     elif name == "set2":
@@ -943,7 +958,11 @@ def make_adjacency_set(
         raise ValueError(f"Unknown example set: '{name}'")
 
 
-def make_adjacency_set1(n: int, *, dtype: Any = None) -> tuple[Array, Array, Array]:
+def make_adjacency_set1(
+    n: int, *, dtype: Any = None
+) -> tuple[
+    Array2D[np.floating[Any]], Array1D[np.integer[Any]], Array1D[np.integer[Any]]
+]:
     """An all-to-all gap junction adjacency matrix."""
     ms = np.array([n])
     gaps = np.array([0])
@@ -954,7 +973,11 @@ def make_adjacency_set1(n: int, *, dtype: Any = None) -> tuple[Array, Array, Arr
     return result
 
 
-def make_adjacency_set2(n: int, *, dtype: Any = None) -> tuple[Array, Array, Array]:
+def make_adjacency_set2(
+    n: int, *, dtype: Any = None
+) -> tuple[
+    Array2D[np.floating[Any]], Array1D[np.integer[Any]], Array1D[np.integer[Any]]
+]:
     """A two group adjacency matrix (10% and 90%)."""
     ps = np.array([0.9, 0.1])
     gaps = np.array([2, 2])
@@ -968,7 +991,11 @@ def make_adjacency_set2(n: int, *, dtype: Any = None) -> tuple[Array, Array, Arr
     return result
 
 
-def make_adjacency_set3(n: int, *, dtype: Any = None) -> tuple[Array, Array, Array]:
+def make_adjacency_set3(
+    n: int, *, dtype: Any = None
+) -> tuple[
+    Array2D[np.floating[Any]], Array1D[np.integer[Any]], Array1D[np.integer[Any]]
+]:
     ps = np.array([0.27, 0.40, 0.33])
     gaps = np.array([n // 15] * ps.size)
 
@@ -981,7 +1008,11 @@ def make_adjacency_set3(n: int, *, dtype: Any = None) -> tuple[Array, Array, Arr
     return result
 
 
-def make_adjacency_set4(n: int, *, dtype: Any = None) -> tuple[Array, Array, Array]:
+def make_adjacency_set4(
+    n: int, *, dtype: Any = None
+) -> tuple[
+    Array2D[np.floating[Any]], Array1D[np.integer[Any]], Array1D[np.integer[Any]]
+]:
     ps = np.array([0.29, 0.25, 0.33, 0.13])
     gaps = np.array([n // 15] * ps.size)
 
@@ -1003,7 +1034,7 @@ def generate_random_gap_junction_clusters(
     mean: int = 9,
     maximum: int = 24,
     maxiter: int = 512,
-) -> Array:
+) -> Array1D[np.integer[Any]]:
     x = np.array([n // m] * m, dtype=np.int64)
 
     # FIXME: this seems like it'll have mean *mean* only if n > mean * m?
@@ -1026,7 +1057,9 @@ def make_adjacency_groups_random(
     *,
     dtype: Any = None,
     rng: np.random.Generator | None = None,
-) -> tuple[Array, Array, Array]:
+) -> tuple[
+    Array2D[np.floating[Any]], Array1D[np.integer[Any]], Array1D[np.integer[Any]]
+]:
     """Generate random gap junction groups that have vaguely realistic sizes.
 
     We know that gap junction clusters have an average size of 9 and can go up
@@ -1066,7 +1099,9 @@ def make_adjacency_set_random(
     *,
     dtype: Any = None,
     rng: np.random.Generator | None = None,
-) -> tuple[Array, Array, Array]:
+) -> tuple[
+    Array2D[np.floating[Any]], Array1D[np.integer[Any]], Array1D[np.integer[Any]]
+]:
     if rng is None:
         rng = np.random.default_rng()
 
