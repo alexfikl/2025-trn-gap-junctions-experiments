@@ -70,7 +70,7 @@ numpy==2.4.6 ; python_full_version == '3.11.*'
     #   pandas
     #   scipy
     #   seaborn
-numpy==2.5.0 ; python_full_version >= '3.12'
+numpy==2.5.1 ; python_full_version >= '3.12'
     # via
     #   trn-gap-junctions (pyproject.toml)
     #   contourpy
@@ -86,7 +86,7 @@ nxviz==0.7.6 ; python_full_version < '3.12'
     # via trn-gap-junctions (pyproject.toml)
 nxviz==0.9.0 ; python_full_version >= '3.12'
     # via trn-gap-junctions (pyproject.toml)
-orbitkit @ git+https://github.com/alexfikl/orbitkit.git@1a7f069cb3e200a137def6da6db0ca3712dd1c13#egg=orbitkit
+orbitkit @ git+https://github.com/alexfikl/orbitkit.git@de89d526afd1f08a5db85aca7e602f7a46c40765#egg=orbitkit
     # via trn-gap-junctions (pyproject.toml)
 packaging==26.2
     # via matplotlib
@@ -100,7 +100,7 @@ pandas==3.0.3 ; python_full_version >= '3.11'
     # via
     #   nxviz
     #   seaborn
-pillow==12.2.0
+pillow==12.3.0
     # via matplotlib
 pygments==2.20.0
     # via rich
@@ -132,7 +132,7 @@ scipy==1.18.0 ; python_full_version >= '3.12'
     #   orbitkit
 seaborn==0.13.2
     # via nxviz
-setuptools==82.0.1
+setuptools==83.0.0
     # via
     #   jitcxde-common
     #   nxviz
@@ -143,5 +143,5 @@ symengine==0.14.1
     #   trn-gap-junctions (pyproject.toml)
     #   jitcode
     #   jitcxde-common
-tzdata==2026.2 ; python_full_version < '3.11' or sys_platform == 'emscripten' or sys_platform == 'win32'
+tzdata==2026.3 ; python_full_version < '3.11' or sys_platform == 'emscripten' or sys_platform == 'win32'
     # via pandas
