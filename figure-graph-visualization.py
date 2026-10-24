@@ -7,9 +7,8 @@ import logging
 import pathlib
 
 import trnlib
-from orbitkit.utils import module_logger
 
-log = module_logger("trn")
+log = logging.getLogger("trn")
 
 
 def main(

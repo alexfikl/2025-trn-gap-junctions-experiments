@@ -12,9 +12,8 @@ from dataclasses import asdict, replace
 import numpy as np
 
 import trnlib
-from orbitkit.utils import module_logger
 
-log = module_logger("trn")
+log = logging.getLogger("trn")
 
 
 def main(

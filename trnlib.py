@@ -3,10 +3,11 @@
 
 from __future__ import annotations
 
+import logging
 import os
 import pathlib
 import time
-from collections.abc import Iterator
+from collections.abc import Generator
 from contextlib import contextmanager
 from dataclasses import dataclass, field, replace
 from functools import partial
@@ -17,9 +18,10 @@ import numpy as np
 import numpy.linalg as la
 
 from orbitkit.typing import Array1D, Array2D
-from orbitkit.utils import module_logger
+from orbitkit.utils import set_up_logging
 
-log = module_logger("trn")
+set_up_logging("INFO")
+log = logging.getLogger("trn")
 
 # {{{ plotting
 
@@ -551,7 +553,7 @@ class Result:
 
 
 @contextmanager
-def jitcode_module(suffix: str) -> Iterator[pathlib.Path]:
+def jitcode_module(suffix: str) -> Generator[pathlib.Path]:
     import tempfile
 
     tempdir = pathlib.Path(tempfile.gettempdir())
